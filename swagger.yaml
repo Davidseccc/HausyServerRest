@@ -378,6 +378,62 @@ paths:
           $ref: '#/responses/ResponseRuleGroup'
         '500':
           $ref: '#/responses/ResponseError'
+
+###################
+##   RULEINPUT   ##  
+###################
+  /ruleInput:
+    get:
+      tags: 
+        - ruleInput
+      summary: Get ruleInput detail information
+      operationId: nodesDetail
+      consumes:
+        - application/x-www-form-urlencoded
+
+      parameters: 
+        - $ref: '#/parameters/sqlParams'
+      responses:
+        '200':
+          $ref: '#/responses/ResponseRuleInput'
+        '500':
+          $ref: '#/responses/ResponseError'          
+#####################
+##   RULEINPUTS    ##  
+#####################
+  /ruleInputs:
+    get:
+      tags: 
+        - ruleInputs
+      summary: Get ruleInputs detail information
+      operationId: nodesDetail
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: 
+        - $ref: '#/parameters/sqlParams'
+      responses:
+        '200':
+          $ref: '#/responses/ResponseRuleGroup'
+        '500':
+          $ref: '#/responses/ResponseError'
+#####################
+##   Logs    ##  
+#####################
+  /logs:
+    get:
+      tags: 
+        - logs
+      summary: Get logs detail information
+      operationId: nodesDetail
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: 
+        - $ref: '#/parameters/sqlParams'
+      responses:
+        '200':
+          $ref: '#/responses/ResponseLogs'
+        '500':
+          $ref: '#/responses/ResponseError'
 #################
 ## PARAMETERS  ##  
 #################  
@@ -811,7 +867,44 @@ definitions:
               example: 0 
             outputNodeAddress:
               type: number
-
+              
+  RuleInput:
+    type: object
+    properties:
+      ruleInputId: 
+        type: number
+        example: 1
+      nodeChannel:  
+        type: number
+        example: 1
+      nodeDataIndex:  
+        type: number
+        example: 1   
+      variable:  
+        type: string
+        example: "a" 
+      nodeAddress:
+        type: number
+        example: 1
+        
+  Log:
+    type: object
+    properties:
+      logType: 
+        type: number
+        example: 123
+      firstEvent:  
+        type: number
+        example: 1
+      lastEvent:  
+        type: number
+        example: 1   
+      counter:  
+        type: number
+        example: "a" 
+      messageContent:
+        type: string
+        example: "test Log"
   RAllNodeTypes:
     allOf: 
       - $ref: '#/definitions/Response'
@@ -867,6 +960,22 @@ definitions:
         properties:
           response:
             $ref: '#/definitions/RuleGroup'
+  RRuleInput:
+    allOf: 
+      - $ref: '#/definitions/Response'
+      - type: object
+        properties:
+          response:
+            $ref: '#/definitions/RuleInput'
+  RAllLogs:
+    allOf: 
+      - $ref: '#/definitions/Response'
+      - type: object
+        properties:
+          response:
+            type: array
+            items:
+              $ref: '#/definitions/Log'      
   RAllUsers:
     allOf: 
       - $ref: '#/definitions/Response'
@@ -985,6 +1094,15 @@ responses:
     schema:
       $ref: '#/definitions/RRuleGroup'
       
+  ResponseRuleInput:
+    description: Success
+    schema:
+      $ref: '#/definitions/RRuleInput'
+  
+  ResponseLogs:
+    description: Success
+    schema:
+      $ref: '#/definitions/RAllLogs'         
   ResponseAllUser:
     description: Success
     schema:
