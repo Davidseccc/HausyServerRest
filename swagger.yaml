@@ -357,7 +357,7 @@ paths:
         - $ref: '#/parameters/sqlParams'
       responses:
         '200':
-          $ref: '#/responses/ResponseRule'
+          $ref: '#/responses/ResponseRuleGroup'
         '500':
           $ref: '#/responses/ResponseError'
 #####################
@@ -371,12 +371,11 @@ paths:
       operationId: nodesDetail
       consumes:
         - application/x-www-form-urlencoded
-
       parameters: 
         - $ref: '#/parameters/sqlParams'
       responses:
         '200':
-          $ref: '#/responses/ResponseRule'
+          $ref: '#/responses/ResponseRuleGroup'
         '500':
           $ref: '#/responses/ResponseError'
 #################
@@ -759,7 +758,60 @@ definitions:
         example: 0 
       outputNodeAddress:
         type: number
-  
+        
+  RuleGroup:
+    type: object
+    properties:
+      ruleGroup_id: 
+        type: number
+        example: 1
+      subsystemId: 
+        type: number
+        example: 1
+      rules:
+        type: object
+        example : 1
+      inputs:
+        type: array
+        items: 
+          type: object
+          properties:     #ref RULE
+            id: 
+              type: number
+              example: 1
+            evaluation: 
+              type: number
+              example: 1
+            subsystemId:
+              type: number
+              example : 1
+            inputs:
+              type: array
+              items: 
+                type: object
+                properties:
+                  ruleInputId: 
+                    type: number
+                  nodeChannel:
+                    type: number
+                  nodeDataIndex:
+                    type: number
+                  variable:
+                    type: string
+                    example: "a"
+                  nodeAddress:
+                    type: number
+            timePeriod:
+              type: number
+            outputNodeChannelId:
+              type: number
+              example: 16
+            trigger:
+              type: number
+              example: 0 
+            outputNodeAddress:
+              type: number
+
   RAllNodeTypes:
     allOf: 
       - $ref: '#/definitions/Response'
@@ -808,6 +860,13 @@ definitions:
         properties:
           response:
             $ref: '#/definitions/Rule' 
+  RRuleGroup:
+    allOf: 
+      - $ref: '#/definitions/Response'
+      - type: object
+        properties:
+          response:
+            $ref: '#/definitions/RuleGroup'
   RAllUsers:
     allOf: 
       - $ref: '#/definitions/Response'
@@ -920,6 +979,11 @@ responses:
     description: Success
     schema:
       $ref: '#/definitions/RRule'
+      
+  ResponseRuleGroup:
+    description: Success
+    schema:
+      $ref: '#/definitions/RRuleGroup'
       
   ResponseAllUser:
     description: Success
