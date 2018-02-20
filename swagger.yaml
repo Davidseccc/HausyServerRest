@@ -341,6 +341,44 @@ paths:
           $ref: '#/responses/ResponseRule'
         '500':
           $ref: '#/responses/ResponseError'
+####################
+##   RULEGROUP    ##  
+####################
+  /ruleGroup:
+    get:
+      tags: 
+        - ruleGroup
+      summary: Get rule detail information
+      operationId: nodesDetail
+      consumes:
+        - application/x-www-form-urlencoded
+
+      parameters: 
+        - $ref: '#/parameters/sqlParams'
+      responses:
+        '200':
+          $ref: '#/responses/ResponseRule'
+        '500':
+          $ref: '#/responses/ResponseError'
+#####################
+##   RULEGROUPS    ##  
+#####################
+  /ruleGroups:
+    get:
+      tags: 
+        - ruleGroups
+      summary: Get ruleGropus detail information
+      operationId: nodesDetail
+      consumes:
+        - application/x-www-form-urlencoded
+
+      parameters: 
+        - $ref: '#/parameters/sqlParams'
+      responses:
+        '200':
+          $ref: '#/responses/ResponseRule'
+        '500':
+          $ref: '#/responses/ResponseError'
 #################
 ## PARAMETERS  ##  
 #################  
