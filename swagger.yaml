@@ -27,7 +27,7 @@ paths:
   /:
     get:
       tags:
-        - users
+        - API
       summary: Get API Information
       operationId: api
       consumes:
@@ -88,7 +88,7 @@ paths:
 
       responses:
         '200': 
-          $ref: '#/responses/ResponseSuccess'
+          $ref: '#/responses/ResponseDataRange'
         '500':
           $ref: '#/responses/ResponseError'
           
@@ -698,7 +698,14 @@ definitions:
         type: object
       group:
         $ref: '#/definitions/Data'
-        
+  
+  DataRange:
+    type: object
+    properties:
+      timestamp:
+        type: object
+      data:
+        $ref: '#/definitions/Data'      
   Device:
     type: object
     properties:
@@ -1020,6 +1027,14 @@ definitions:
           response:
             $ref: '#/definitions/Data'
             
+  RDataRange:
+    allOf: 
+      - $ref: '#/definitions/Response'
+      - type: object
+        properties:
+          response:
+            $ref: '#/definitions/DataRange'   
+            
   RString:
     allOf: 
       - $ref: '#/definitions/Response'
@@ -1127,7 +1142,12 @@ responses:
     description: Success
     schema:
       $ref: '#/definitions/RData'
-  
+   
+  ResponseDataRange:
+    description: Success
+    schema:
+      $ref: '#/definitions/RDataRange' 
+      
   ResponseString:
     description: Success (e.g. token)
     schema:
