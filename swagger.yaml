@@ -71,11 +71,11 @@ paths:
         '500':
           $ref: '#/responses/ResponseError'
         
-  /dataRange:
+  /dataAVG:
     get:
       tags:
         - data
-      summary: Get all Data
+      summary: Get data averages
       operationId: dataGetAll
       consumes:
         - application/x-www-form-urlencoded
@@ -85,6 +85,8 @@ paths:
         - $ref: '#/parameters/globalId'
         - $ref: '#/parameters/limitReq'
         - $ref: '#/parameters/window'
+        - $ref: '#/parameters/windowSize'
+
 
       responses:
         '200': 
@@ -125,6 +127,36 @@ paths:
           $ref: '#/responses/Response404Error'
         '500':
           $ref: '#/responses/ResponseError'
+    delete:
+      tags:
+        - device
+      summary: Delete device
+      parameters: 
+        - $ref: '#/parameters/globalId'
+      responses:
+        '200':
+          $ref: '#/responses/ResponseSuccess'
+        '500':
+          $ref: '#/responses/ResponseError'
+    put:
+      tags: 
+        - devices
+      summary: Update device's current value
+      operationId: devicesSetCurrentVal
+      parameters: 
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/version'
+        - $ref: '#/parameters/globalId'
+        - name: value
+          in: query
+          description: New value
+          type: string
+          required: true
+      responses:
+        '200':
+          $ref: '#/responses/ResponseSuccess'
+        '500':
+          $ref: '#/responses/ResponseError'
     post:
       tags:
         - devices
@@ -161,53 +193,7 @@ paths:
           $ref: '#/responses/ResponseDevice'
         '500':
           $ref: '#/responses/ResponseError'
-  /devices/{id}:
-    get:
-      tags: 
-        - devices
-      summary: Get device detail information
-      operationId: devicesDetail
-      parameters: 
-        - $ref: '#/parameters/token'
-        - $ref: '#/parameters/version'
-        - $ref: '#/parameters/anyID'
-      responses:
-        '200':
-          $ref: '#/responses/ResponseDevice'
-        '500':
-          $ref: '#/responses/ResponseError'
-    delete:
-      tags:
-        - devices
-      summary: Delete device
-      parameters: 
-        - $ref: '#/parameters/token'
-        - $ref: '#/parameters/version'
-        - $ref: '#/parameters/anyID'
-      responses:
-        '200':
-          $ref: '#/responses/ResponseSuccess'
-        '500':
-          $ref: '#/responses/ResponseError'
-    put:
-      tags: 
-        - devices
-      summary: Update device's current value
-      operationId: devicesSetCurrentVal
-      parameters: 
-        - $ref: '#/parameters/token'
-        - $ref: '#/parameters/version'
-        - $ref: '#/parameters/anyID'
-        - name: value
-          in: query
-          description: New value
-          type: string
-          required: true
-      responses:
-        '200':
-          $ref: '#/responses/ResponseSuccess'
-        '500':
-          $ref: '#/responses/ResponseError'
+
 #################
 ##   NODE    ##  
 #################  
@@ -467,9 +453,17 @@ parameters:
     description: Define number of results
     in: query
     type: string
-    enum: [static, float, Static, Float]
+    enum: [static, float, minute, 5minutes, 10minutes,30minutes, hour, day, custom]
     default: static
     required: true
+
+  windowSize:   
+    name: windowSize
+    description: Define the window size in seconds for data averages (requieres window param as custom)
+    in: query
+    type: number
+    default: 10000
+    required: false
     
   fromTimestamp:
     name: from
