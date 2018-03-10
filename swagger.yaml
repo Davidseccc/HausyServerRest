@@ -9,7 +9,7 @@ consumes:
   - application/json
 produces:
   - application/json
-host: da3f00af.ngrok.io
+host: hausy.ihmc.us
 basePath: /api/v1.0/
 tags:
   - name: users
@@ -213,23 +213,7 @@ paths:
           $ref: '#/responses/ResponseNode'
         '500':
           $ref: '#/responses/ResponseError'
-    post:
-      tags:
-        - devices
-      summary: Create new device
-      consumes:
-        - application/x-www-form-urlencoded
-      parameters:
-        - $ref: '#/parameters/name'
-        - $ref: '#/parameters/equation'
-        - $ref: '#/parameters/subsystem'
-        - $ref: '#/parameters/node'
-        - $ref: '#/parameters/channel'
-      responses:
-        '200':
-          $ref: '#/responses/ResponseDevice'
-        '500':
-          $ref: '#/responses/ResponseError'
+
 #################
 ##   NODES    ##  
 #################  
@@ -495,7 +479,7 @@ parameters:
     description: "subsystemId:nodeddress:channelId"
     in: query
     type: string
-    default: "2:4:0"
+    default: "3:20:0"
     required: true 
     
   equation:
